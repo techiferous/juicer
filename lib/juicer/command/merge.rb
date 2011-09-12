@@ -126,7 +126,11 @@ the compressor the path should be the path to where the jar file is found.
         end
 
         # Set command chain and execute
-        merger.set_next(image_embed(output)).set_next(cache_buster(output)).set_next(minifyer)
+        if minifyer.nil?
+          merger.set_next(image_embed(output)).set_next(cache_buster(output))
+        else
+          merger.set_next(image_embed(output)).set_next(cache_buster(output)).set_next(minifyer)
+        end
         merger.save(output)
 
         # Print report
